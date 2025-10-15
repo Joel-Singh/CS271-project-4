@@ -1,155 +1,138 @@
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// empty()
+// Description: Indicate whether the binary search tree
+// bst is empty.
 //
 // RETURN VALUE:
-//  Return Value
+//  true or false
 //=================================================
 template <typename D, typename K> 
 bool BST<D, K>::empty() {}
 
 //=================================================
-// functionName
-// Description
+// insert(D d, K k)
+// Description: should insert a data d and key k into
+// the binary search tree bst.
 //
 // PARAMETERS:
-//  parameters 
+//  D data, K key
 //
-// RETURN VALUE:
-//  Return Value
 //=================================================
 template <typename D, typename K> 
 void BST<D, K>::insert(D d, K k) {}
 
 //=================================================
-// functionName
-// Description
+// get(K k)
+// Description: return the data associated with key k
+// in the bst.
 //
 // PARAMETERS:
-//  parameters 
+//  K key
 //
 // RETURN VALUE:
-//  Return Value
+//  D data associated with key.
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::get(K k) {}
 
 //=================================================
-// functionName
-// Description
+// remove(K k)
+// Description: should remove the first (closest to
+// the root) node with key k in the bst.
 //
 // PARAMETERS:
-//  parameters 
-//
-// RETURN VALUE:
-//  Return Value
+//  K key
 //=================================================
 template <typename D, typename K> 
 void BST<D, K>::remove(K k) {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// max_data()
+// Description: return the data associate with the
+// largest key in bst.
 //
 // RETURN VALUE:
-//  Return Value
+//  D data associate with the largest K key.
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::max_data() {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// max_key()
+// Description: return the largest key in bst.
 //
 // RETURN VALUE:
-//  Return Value
+//  Largest K key in the bst.
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::max_key() {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// min_data()
+// Description: return the data associate with the
+// smallest key in the bst.
 //
 // RETURN VALUE:
-//  Return Value
+//  D data associate with the smallest K key.
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::min_data() {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// min_key()
+// Description: return the smallest key in the bst.
 //
 // RETURN VALUE:
-//  Return Value
+//  Smallest K key in the bst.
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::min_key() {}
 
 //=================================================
-// functionName
-// Description
+// successor(K k)
+// Description: return the next key after the indicated
+// key (if for smallest, then the smallest key after the
+// indicated key, and vice versa)
 //
 // PARAMETERS:
-//  parameters 
+//  K key
 //
 // RETURN VALUE:
-//  Return Value
+//  The K key after the indicated K key.
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::successor(K k) {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// to_string
+// Description: return all the keys in bst in string
+// form.
 //
 // RETURN VALUE:
-//  Return Value
+//  A string of keys.
 //=================================================
 template <typename D, typename K> 
 string BST<D, K>::to_string() {}
 
 //=================================================
-// functionName
-// Description
-//
-// PARAMETERS:
-//  parameters 
+// in_order()
+// Description: same as to_string, but keys in
+// ascending order.
 //
 // RETURN VALUE:
-//  Return Value
+//  A string of keys in ascending order.
 //=================================================
 template <typename D, typename K> 
 string BST<D, K>::in_order() {}
 
 //=================================================
-// functionName
-// Description
+// trim(K low, K high)
+// Description: should trim the binary search
+// tree bst so that the keys of every node lie in
+// the interval [low, high].
 //
 // PARAMETERS:
-//  parameters 
-//
-// RETURN VALUE:
-//  Return Value
+//  K low, K high
 //=================================================
 template <typename D, typename K> 
 void BST<D, K>::trim(K low, K high) {}
