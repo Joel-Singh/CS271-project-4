@@ -1,4 +1,16 @@
 //=================================================
+// BST()
+// Description: Constructor for the bst.
+//
+// RETURN VALUE:
+//  an empty tree.
+//=================================================
+template <typename D, typename K>
+BST<D, K>::BST(void) {
+    ptr = nullptr;
+}
+
+//=================================================
 // empty()
 // Description: Indicate whether the binary search tree
 // bst is empty.
@@ -7,7 +19,9 @@
 //  true or false
 //=================================================
 template <typename D, typename K> 
-bool BST<D, K>::empty() {}
+bool BST<D, K>::empty() {
+    return ptr == nullptr;
+}
 
 //=================================================
 // insert(D d, K k)

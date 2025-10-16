@@ -16,6 +16,7 @@ struct Node {
 template <typename D, typename K>
 class BST {
 public:
+  BST(void);
   bool empty();
   void insert(D d, K k);
   D get(K k);
@@ -30,6 +31,8 @@ public:
   void trim(K low, K high);
 private:
   void transplant(Node<D, K>* u, Node<D, K>* v);
+  
+  Node<D, K>* ptr;
 };
 
 #include "BST.cpp"
