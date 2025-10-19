@@ -17,6 +17,7 @@ template <typename D, typename K>
 class BST {
 public:
   BST(void);
+  ~BST(void);
   bool empty();
   void insert(D d, K k);
   D get(K k);

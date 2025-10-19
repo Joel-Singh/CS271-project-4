@@ -10,6 +10,31 @@ BST<D, K>::BST(void) {
     root = nullptr;
 }
 
+template <typename D, typename K> 
+static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
+    if (left != nullptr) {
+        auto l = left->left;
+        auto r = left->right;
+        delete left;
+        delete_BST(l, r);
+    }
+
+    if (right != nullptr) {
+        auto l = right->left;
+        auto r = right->right;
+        delete right;
+        delete_BST(l, r);
+    }
+}
+
+template <typename D, typename K>
+BST<D, K>::~BST(void) {
+    auto left = root->left;
+    auto right = root->right;
+    delete root;
+    delete_BST(left, right);
+}
+
 //=================================================
 // empty()
 // Description: Indicate whether the binary search tree
