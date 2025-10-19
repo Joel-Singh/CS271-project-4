@@ -58,7 +58,38 @@ bool BST<D, K>::empty() {
 //
 //=================================================
 template <typename D, typename K> 
-void BST<D, K>::insert(D d, K k) {}
+void BST<D, K>::insert(D d, K k) {
+    // From page 321 of textbook
+    Node<D, K>* z = new Node<D, K> {
+        left: nullptr,
+        right: nullptr,
+        parent: nullptr,
+        data: d,
+        key: k
+    };
+
+    Node<D, K>* x = root;
+    Node<D, K>* y = nullptr;
+
+    while (x != nullptr) {
+        y = x;
+        if (z->key < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+
+    z->parent = y;
+
+    if (y == nullptr) {
+        root = z;
+    } else if (z->key < y->key) {
+        y->left = z;
+    } else {
+        y->right = z;
+    }
+}
 
 //=================================================
 // get(K k)

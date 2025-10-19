@@ -9,6 +9,7 @@ template <typename D, typename K>
 struct Node {
   Node<D, K>* left;
   Node<D, K>* right;
+  Node<D, K>* parent;
   D data;
   K key;
 };
