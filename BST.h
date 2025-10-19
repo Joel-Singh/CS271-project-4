@@ -32,7 +32,7 @@ public:
 private:
   void transplant(Node<D, K>* u, Node<D, K>* v);
   
-  Node<D, K>* ptr;
+  Node<D, K>* root;
 };
 
 #include "BST.cpp"

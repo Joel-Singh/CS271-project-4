@@ -7,7 +7,7 @@
 //=================================================
 template <typename D, typename K>
 BST<D, K>::BST(void) {
-    ptr = nullptr;
+    root = nullptr;
 }
 
 //=================================================
@@ -20,7 +20,7 @@ BST<D, K>::BST(void) {
 //=================================================
 template <typename D, typename K> 
 bool BST<D, K>::empty() {
-    return ptr == nullptr;
+    return root == nullptr;
 }
 
 //=================================================
