@@ -1,3 +1,6 @@
+#include <list>
+#include <sstream>
+
 //=================================================
 // BST()
 // Constructor for the bst.
@@ -175,14 +178,48 @@ K BST<D, K>::successor(K k) {}
 
 //=================================================
 // to_string
-// return all the keys in bst in string
-// form.
+// returns a string with the keys in the BST separated by a single space and
+// ordered from top (root) to bottom (leaves) and left to right. For example:
+// `9 49 58 78`
 //
 // RETURN VALUE:
 //  A string of keys.
 //=================================================
 template <typename D, typename K> 
-string BST<D, K>::to_string() {}
+string BST<D, K>::to_string() {
+    if (root == nullptr) {
+        return "";
+    }
+
+    stringstream s;
+    s << root->key;
+
+    list<Node<D, K>*> current_layer;
+    current_layer.push_back(root);
+
+    while (!current_layer.empty()) {
+        list<Node<D, K>*> next_layer;
+
+        for (auto node : current_layer) {
+            auto left = node->left;
+            auto right = node->right;
+
+            if (node->left != nullptr) {
+                s << node->left->key;
+                next_layer.push_back(left);
+            }
+
+            if (right != nullptr) {
+                s << node->right->key;
+                next_layer.push_back(right);
+            }
+
+            current_layer = next_layer;
+        }
+
+        return s.str();
+    }
+}
 
 //=================================================
 // in_order()
