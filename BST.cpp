@@ -1,5 +1,7 @@
 #include <list>
+#include "BST.h"
 #include <sstream>
+#include <iostream>
 
 //=================================================
 // BST()
@@ -192,7 +194,7 @@ string BST<D, K>::to_string() {
     }
 
     stringstream s;
-    s << root->key;
+    s << root->key << " ";
 
     list<Node<D, K>*> current_layer;
     current_layer.push_back(root);
@@ -205,20 +207,22 @@ string BST<D, K>::to_string() {
             auto right = node->right;
 
             if (node->left != nullptr) {
-                s << node->left->key;
+                s << node->left->key << " ";
                 next_layer.push_back(left);
             }
 
             if (right != nullptr) {
-                s << node->right->key;
+                s << node->right->key << " ";
                 next_layer.push_back(right);
             }
-
-            current_layer = next_layer;
         }
 
-        return s.str();
+        current_layer = next_layer;
     }
+
+    string str = s.str();
+    str = str.substr(0, str.size() - 1); // Remove trailing space
+    return str;
 }
 
 //=================================================
