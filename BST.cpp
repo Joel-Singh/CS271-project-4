@@ -1,6 +1,6 @@
 //=================================================
 // BST()
-// Description: Constructor for the bst.
+// Constructor for the bst.
 //
 // RETURN VALUE:
 //  an empty tree.
@@ -37,7 +37,7 @@ BST<D, K>::~BST(void) {
 
 //=================================================
 // empty()
-// Description: Indicate whether the binary search tree
+// Indicate whether the binary search tree
 // bst is empty.
 //
 // RETURN VALUE:
@@ -50,7 +50,7 @@ bool BST<D, K>::empty() {
 
 //=================================================
 // insert(D d, K k)
-// Description: should insert a data d and key k into
+// should insert a data d and key k into
 // the binary search tree bst.
 //
 // PARAMETERS:
@@ -62,7 +62,7 @@ void BST<D, K>::insert(D d, K k) {}
 
 //=================================================
 // get(K k)
-// Description: return the data associated with key k
+// return the data associated with key k
 // in the bst.
 //
 // PARAMETERS:
@@ -76,7 +76,7 @@ D BST<D, K>::get(K k) {}
 
 //=================================================
 // remove(K k)
-// Description: should remove the first (closest to
+// should remove the first (closest to
 // the root) node with key k in the bst.
 //
 // PARAMETERS:
@@ -87,7 +87,7 @@ void BST<D, K>::remove(K k) {}
 
 //=================================================
 // max_data()
-// Description: return the data associate with the
+// return the data associate with the
 // largest key in bst.
 //
 // RETURN VALUE:
@@ -98,7 +98,7 @@ D BST<D, K>::max_data() {}
 
 //=================================================
 // max_key()
-// Description: return the largest key in bst.
+// return the largest key in bst.
 //
 // RETURN VALUE:
 //  Largest K key in the bst.
@@ -108,7 +108,7 @@ K BST<D, K>::max_key() {}
 
 //=================================================
 // min_data()
-// Description: return the data associate with the
+// return the data associate with the
 // smallest key in the bst.
 //
 // RETURN VALUE:
@@ -119,7 +119,7 @@ D BST<D, K>::min_data() {}
 
 //=================================================
 // min_key()
-// Description: return the smallest key in the bst.
+// return the smallest key in the bst.
 //
 // RETURN VALUE:
 //  Smallest K key in the bst.
@@ -129,7 +129,7 @@ K BST<D, K>::min_key() {}
 
 //=================================================
 // successor(K k)
-// Description: return the next key after the indicated
+// return the next key after the indicated
 // key (if for smallest, then the smallest key after the
 // indicated key, and vice versa)
 //
@@ -144,7 +144,7 @@ K BST<D, K>::successor(K k) {}
 
 //=================================================
 // to_string
-// Description: return all the keys in bst in string
+// return all the keys in bst in string
 // form.
 //
 // RETURN VALUE:
@@ -155,7 +155,7 @@ string BST<D, K>::to_string() {}
 
 //=================================================
 // in_order()
-// Description: same as to_string, but keys in
+// same as to_string, but keys in
 // ascending order.
 //
 // RETURN VALUE:
@@ -166,7 +166,7 @@ string BST<D, K>::in_order() {}
 
 //=================================================
 // trim(K low, K high)
-// Description: should trim the binary search
+// should trim the binary search
 // tree bst so that the keys of every node lie in
 // the interval [low, high].
 //
