@@ -15,6 +15,16 @@ BST<D, K>::BST(void) {
     root = nullptr;
 }
 
+//=================================================
+// delete_BST(Node<D, K>* left, Node<D, K>* right)
+// Description: ?
+//
+// PARAMETERS: ?
+//  
+//
+// RETURN VALUE: ?
+//  
+//=================================================
 template <typename D, typename K> 
 static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
     if (left != nullptr) {
@@ -32,6 +42,10 @@ static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
     }
 }
 
+//=================================================
+// ~BST()
+// Destructor for the bst.
+//=================================================
 template <typename D, typename K>
 BST<D, K>::~BST(void) {
     auto left = root->left;
@@ -130,7 +144,13 @@ void BST<D, K>::remove(K k) {}
 //  D data associate with the largest K key.
 //=================================================
 template <typename D, typename K> 
-D BST<D, K>::max_data() {}
+D BST<D, K>::max_data() {
+    while (root -> right != nullptr) {
+        root = root -> right;
+    }
+    
+    return root -> data;
+}
 
 //=================================================
 // max_key()
@@ -140,7 +160,13 @@ D BST<D, K>::max_data() {}
 //  Largest K key in the bst.
 //=================================================
 template <typename D, typename K> 
-K BST<D, K>::max_key() {}
+K BST<D, K>::max_key() {
+    while (root -> right != nullptr) {
+        root = root -> right;
+    }
+    
+    return root -> key;
+}
 
 //=================================================
 // min_data()
@@ -151,7 +177,13 @@ K BST<D, K>::max_key() {}
 //  D data associate with the smallest K key.
 //=================================================
 template <typename D, typename K> 
-D BST<D, K>::min_data() {}
+D BST<D, K>::min_data() {
+    while (root -> left != nullptr) {
+        root = root -> left;
+    }
+    
+    return root -> data;
+}
 
 //=================================================
 // min_key()
@@ -161,13 +193,17 @@ D BST<D, K>::min_data() {}
 //  Smallest K key in the bst.
 //=================================================
 template <typename D, typename K> 
-K BST<D, K>::min_key() {}
+K BST<D, K>::min_key() {
+    while (root -> left != nullptr) {
+        root = root -> left;
+    }
+    
+    return root -> key;
+}
 
 //=================================================
 // successor(K k)
-// return the next key after the indicated
-// key (if for smallest, then the smallest key after the
-// indicated key, and vice versa)
+// return the right key after the indicated key.
 //
 // PARAMETERS:
 //  K key
@@ -176,7 +212,19 @@ K BST<D, K>::min_key() {}
 //  The K key after the indicated K key.
 //=================================================
 template <typename D, typename K> 
-K BST<D, K>::successor(K k) {}
+K BST<D, K>::successor(K k) {
+    while ((root != nullptr) && (k != root -> key)) {
+        if (k < root -> key) {
+            root = root -> left;
+        } else {
+            root = root -> right;
+        }
+    }
+    
+    root = root -> right;
+    
+    return root -> key;
+}
 
 //=================================================
 // to_string
