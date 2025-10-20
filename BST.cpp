@@ -48,6 +48,10 @@ static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
 //=================================================
 template <typename D, typename K>
 BST<D, K>::~BST(void) {
+    if (root == nullptr) {
+        return;
+    }
+
     auto left = root->left;
     auto right = root->right;
     delete root;
@@ -111,6 +115,31 @@ void BST<D, K>::insert(D d, K k) {
 }
 
 //=================================================
+// iterative_tree_search
+// Iteratively searches for a node with key k starting at node x. From page 316
+// of the book. Used in the "get" method where x is the root node in the initial
+// call.
+//
+// PARAMETERS:
+//  x: The node to start at
+//  k: The key to search for
+//
+// RETURN VALUE:
+//  A pointer to the found node or null.
+//=================================================
+template <typename D, typename K> 
+Node<D, K>* iterative_tree_search(Node<D, K>* x, K k) {
+    while (x != nullptr && k != x->key) {
+        if (k < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    return x;
+}
+
+//=================================================
 // get(K k)
 // return the data associated with key k
 // in the bst.
@@ -122,7 +151,24 @@ void BST<D, K>::insert(D d, K k) {
 //  D data associated with key.
 //=================================================
 template <typename D, typename K> 
-D BST<D, K>::get(K k) {}
+D BST<D, K>::get(K k) {
+    auto found = iterative_tree_search(root, k);
+    if (found == nullptr) {
+        if constexpr (is_same_v<D, string>) {
+            return "";
+        } else if constexpr (is_same_v<D, bool>) {
+            return false;
+        } else if constexpr (is_arithmetic_v<D>) {
+            return 0;
+        } else {
+          throw runtime_error(
+              "Tried to get a key for a Data type that doesn't have a default "
+              "value (valid types: bool, arithmetic, and string)");
+        }
+    } else {
+        return found->data;
+    }
+}
 
 //=================================================
 // remove(K k)

@@ -353,7 +353,7 @@ int main()
 
     test_empty();
     test_insert();
-    // test_get();
+    test_get();
     // test_remove();
     // test_max_data();
     // test_max_key();
