@@ -209,7 +209,8 @@ K BST<D, K>::min_key() {
 //  K key
 //
 // RETURN VALUE:
-//  The K key after the indicated K key.
+//  The K key after the indicated K key, or 0 if
+// the tree is empty.
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::successor(K k) {
@@ -221,7 +222,13 @@ K BST<D, K>::successor(K k) {
         }
     }
     
-    root = root -> right;
+    if (root -> right == nullptr) {
+        return 0;
+    }
+    
+    else {
+        root = root -> right;
+    }
     
     return root -> key;
 }
