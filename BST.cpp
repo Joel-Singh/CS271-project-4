@@ -80,11 +80,11 @@ template <typename D, typename K>
 void BST<D, K>::insert(D d, K k) {
     // From page 321 of textbook
     Node<D, K>* z = new Node<D, K> {
-        left: nullptr,
-        right: nullptr,
-        parent: nullptr,
-        data: d,
-        key: k
+        .left = nullptr,
+        .right = nullptr,
+        .parent = nullptr,
+        .data = d,
+        .key = k
     };
 
     Node<D, K>* x = root;
