@@ -292,7 +292,8 @@ Node<D, K>* BST<D, K>::min(Node<D, K>* x) {
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::min_data() {
-    // DANGER: does not check if root == nullptr
+    assert(root != nullptr);
+
     return min(root)->data;
 }
 
