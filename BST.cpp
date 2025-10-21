@@ -306,6 +306,8 @@ D BST<D, K>::min_data() {
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::min_key() {
+    assert(root != nullptr);
+
     while (root -> left != nullptr) {
         root = root -> left;
     }
