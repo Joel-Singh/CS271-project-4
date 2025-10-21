@@ -34,6 +34,7 @@ public:
   void trim(K low, K high);
 private:
   void transplant(Node<D, K>* u, Node<D, K>* v);
+  Node<D, K>* min(Node<D, K>* node);
   
   Node<D, K>* root;
 };

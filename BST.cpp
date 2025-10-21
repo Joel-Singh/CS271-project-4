@@ -2,6 +2,7 @@
 #include "BST.h"
 #include <sstream>
 #include <iostream>
+#include <cassert>
 
 //=================================================
 // BST()
@@ -171,15 +172,58 @@ D BST<D, K>::get(K k) {
 }
 
 //=================================================
+// transplant
+// Replaces one subtree as a child of its parent with another subtree.
+//
+// PARAMETERS:
+//  u: A non-nil ptr to a subtree
+//  v: Possibly nil ptr to a subtree
+//=================================================
+template <typename D, typename K> 
+void BST<D, K>::transplant(Node<D, K>* u, Node<D, K>* v) {
+    assert(u != nullptr);
+    if (u->parent == nullptr) {
+        root = v;
+    } else if (u == u->parent->left) {
+        u->parent->left = v;
+    } else {
+        u->parent->right = v;
+    }
+
+    if (v != nullptr) {
+        v->parent = u->parent;
+    }
+}
+
+//=================================================
 // remove(K k)
-// should remove the first (closest to
-// the root) node with key k in the bst.
+// removes the first (closest to the root) node with key k in the bst. Algorithm
+// from page 325 of the book.
 //
 // PARAMETERS:
 //  K key
 //=================================================
 template <typename D, typename K> 
-void BST<D, K>::remove(K k) {}
+void BST<D, K>::remove(K k) {
+    auto z = iterative_tree_search(root, k);
+    assert(z != nullptr);
+
+    if (z->left == nullptr) {
+        transplant(z, z->right);
+    } else if (z->right == nullptr) {
+        transplant(z, z->left);
+    } else {
+        auto y = min(z->right);
+        if (y != z->right) {
+            transplant(y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+        }
+        transplant(z, y);
+        y->left = z->left;
+        y->left->parent = y;
+    }
+}
 
 //=================================================
 // max_data()
@@ -215,8 +259,29 @@ K BST<D, K>::max_key() {
 }
 
 //=================================================
+// min
+// Returns the minimum node in the tree. From page 318 in the book.
+//
+// RETURN VALUE:
+//  The minimum node in the tree, or nil x is nil.
+//=================================================
+template <typename D, typename K>
+Node<D, K>* BST<D, K>::min(Node<D, K>* x) {
+    if (x == nullptr) {
+        return nullptr;
+    }
+
+    while (x -> left != nullptr) {
+        x = x -> left;
+    }
+
+    return x;
+}
+
+
+//=================================================
 // min_data()
-// return the data associate with the
+// return the data associated with the
 // smallest key in the bst.
 //
 // RETURN VALUE:
@@ -224,11 +289,8 @@ K BST<D, K>::max_key() {
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::min_data() {
-    while (root -> left != nullptr) {
-        root = root -> left;
-    }
-    
-    return root -> data;
+    // DANGER: does not check if root == nullptr
+    return min(root)->data;
 }
 
 //=================================================
