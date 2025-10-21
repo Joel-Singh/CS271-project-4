@@ -317,34 +317,36 @@ K BST<D, K>::min_key() {
 
 //=================================================
 // successor(K k)
-// return the right key after the indicated key.
+// Returns the key of the successor in the binary search tree bst for key k
+// (i.e., the smallest key in bst that is larger than k). If no such successor
+// exists, return 0. Implemented from page 319 of the book.
 //
 // PARAMETERS:
 //  K key
 //
 // RETURN VALUE:
-//  The K key after the indicated K key, or 0 if
-// the tree is empty.
+//  The key of the successor or 0 if no such successor exists
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::successor(K k) {
-    while ((root != nullptr) && (k != root -> key)) {
-        if (k < root -> key) {
-            root = root -> left;
-        } else {
-            root = root -> right;
-        }
-    }
-    
-    if (root -> right == nullptr) {
+    auto x = iterative_tree_search(root, k);
+    if (x == nullptr) {
         return 0;
     }
-    
-    else {
-        root = root -> right;
+
+    if (x->right != nullptr) {
+        return min(x->right)->key;
+    } else {
+        auto y = x->parent;
+        while (y != nullptr && x == y->right) {
+            x = y;
+            y = y->parent;
+        }
+        if (y == nullptr) {
+            return 0;
+        }
+        return y->key;
     }
-    
-    return root -> key;
 }
 
 //=================================================
