@@ -252,6 +252,8 @@ D BST<D, K>::max_data() {
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::max_key() {
+    assert(root != nullptr);
+
     while (root -> right != nullptr) {
         root = root -> right;
     }
