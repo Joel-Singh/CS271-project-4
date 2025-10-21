@@ -235,6 +235,7 @@ void BST<D, K>::remove(K k) {
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::max_data() {
+    assert(root != nullptr);
     while (root -> right != nullptr) {
         root = root -> right;
     }
