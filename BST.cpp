@@ -326,6 +326,22 @@ string BST<D, K>::to_string() {
     return str;
 }
 
+template <typename D, typename K> 
+string BST<D, K>::in_order(Node<D, K>* x) {
+    stringstream s;
+
+    if (x != nullptr) {
+        sortAlg(x -> left)
+    
+        s << x -> key << " ";
+    
+        sortAlg(x -> right)
+    }
+    
+    string str = s.str();
+    str = str.substr(0, str.size() - 1); // Remove trailing space
+    return str;
+}
 //=================================================
 // in_order()
 // same as to_string, but keys in
@@ -335,7 +351,13 @@ string BST<D, K>::to_string() {
 //  A string of keys in ascending order.
 //=================================================
 template <typename D, typename K> 
-string BST<D, K>::in_order() {}
+string BST<D, K>::in_order() {
+    if (root == nullptr) {
+        return "";
+    }
+    
+    return in_order(root);
+}
 
 //=================================================
 // trim(K low, K high)
