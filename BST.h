@@ -28,7 +28,7 @@ public:
   D min_data();
   K min_key();
   K successor(K k);
-  string to_string();
+  string to_string() const;
   string in_order(Node<D, K>* x);
   string in_order();
   void trim(K low, K high);

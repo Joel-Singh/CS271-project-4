@@ -161,9 +161,7 @@ D BST<D, K>::get(K k) {
         } else if constexpr (is_arithmetic_v<D>) {
             return 0;
         } else {
-          throw runtime_error(
-              "Tried to get a key for a Data type that doesn't have a default "
-              "value (valid types: bool, arithmetic, and string)");
+            return D();
         }
     } else {
         return found->data;
@@ -358,7 +356,7 @@ K BST<D, K>::successor(K k) {
 //  A string of keys.
 //=================================================
 template <typename D, typename K> 
-string BST<D, K>::to_string() {
+string BST<D, K>::to_string() const {
     if (root == nullptr) {
         return "";
     }
@@ -408,7 +406,6 @@ string BST<D, K>::in_order(Node<D, K>* x) {
     }
 
     string str = s.str();
-    str = str.substr(0, str.size() - 1); // Remove trailing space
     return str;
 }
 //=================================================
@@ -425,7 +422,10 @@ string BST<D, K>::in_order() {
         return "";
     }
     
-    return in_order(root);
+
+    string in_order_str = in_order(root);
+    in_order_str = in_order_str.substr(0, in_order_str.size() - 1); // Remove trailing space
+    return in_order_str;
 }
 
 template <typename D, typename K> 

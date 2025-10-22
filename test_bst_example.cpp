@@ -7,6 +7,7 @@
 #include <iostream>
 #include <math.h>
 #include "usecase.cpp"
+#include "extended_tests.cpp"
 
 using namespace std;
 
@@ -361,6 +362,7 @@ int main()
     test_min_key();
     test_successor();
     test_in_order();
+    extended_tests();
     // test_trim();
     // test_binhex();
 
