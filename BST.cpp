@@ -439,4 +439,40 @@ string BST<D, K>::in_order() {
 //  K low, K high
 //=================================================
 template <typename D, typename K> 
-void BST<D, K>::trim(K low, K high) {}
+void BST<D, K>::trim(K low, K high) {
+    if (root == nullptr) {
+        break;
+    }
+    
+    Node<D, K>* less = root;
+    Node<D, K>* more = root;
+    
+    if ((root >= low) && (root <= high)) {
+        while ((less >= low) && (more <= high)) {
+            less = less -> left;
+            
+            more = more -> right;
+        }
+        // The cutting part.
+    }
+    
+    else if (root < low) {
+        // root = root -> right;
+        // more = more -> right;
+        // delete less;
+        // while (more < low)) {
+            //more = more -> right;
+        // }
+        // the cutting part.
+    }
+    
+    else if (root > high) {
+        // root = root -> left;
+        // less = less -> left;
+        // delete more;
+        // while (less > high)) {
+            //less = less -> left;
+        // }
+        // the cutting part.
+    }
+}
