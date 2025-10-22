@@ -29,7 +29,7 @@ public:
   K min_key();
   K successor(K k);
   string to_string();
-  string BST<D, K>::in_order(Node<D, K>* x);
+  string in_order(Node<D, K>* x);
   string in_order();
   void trim(K low, K high);
 private:

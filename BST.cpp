@@ -401,13 +401,13 @@ string BST<D, K>::in_order(Node<D, K>* x) {
     stringstream s;
 
     if (x != nullptr) {
-        sortAlg(x -> left)
-    
+        s << in_order(x -> left);
+
         s << x -> key << " ";
-    
-        sortAlg(x -> right)
+
+        s << in_order(x -> right);
     }
-    
+
     string str = s.str();
     str = str.substr(0, str.size() - 1); // Remove trailing space
     return str;

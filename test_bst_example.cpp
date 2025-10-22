@@ -360,7 +360,7 @@ int main()
     test_min_data();
     test_min_key();
     test_successor();
-    // test_in_order();
+    test_in_order();
     // test_trim();
     // test_binhex();
 
