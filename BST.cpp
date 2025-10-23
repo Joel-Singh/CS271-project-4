@@ -42,7 +42,6 @@ static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
         delete_BST(l, r);
     }
 }
-
 //=================================================
 // ~BST()
 // Destructor for the bst.
@@ -414,7 +413,7 @@ string BST<D, K>::in_order(Node<D, K>* x) {
 }
 //=================================================
 // in_order()
-// same as to_string, but keys in
+// same as to_string, but keys displayed in
 // ascending order.
 //
 // RETURN VALUE:
@@ -429,6 +428,11 @@ string BST<D, K>::in_order() {
     return in_order(root);
 }
 
+template <typename D, typename K> 
+static void delete_BST(Node<D, K>* node) {
+    delete_BST(node->left, node->right);
+}
+
 //=================================================
 // trim(K low, K high)
 // should trim the binary search
@@ -440,39 +444,72 @@ string BST<D, K>::in_order() {
 //=================================================
 template <typename D, typename K> 
 void BST<D, K>::trim(K low, K high) {
-    if (root == nullptr) {
-        break;
-    }
-    
     Node<D, K>* less = root;
     Node<D, K>* more = root;
     
-    if ((root >= low) && (root <= high)) {
-        while ((less >= low) && (more <= high)) {
+    if (root == nullptr) {
+    }
+    
+    else if ((root -> key >= low) && (root -> key <= high)) {
+        while (less -> left -> key >= low) {
             less = less -> left;
-            
+        }
+        
+        while (more -> right -> key <= high) {
             more = more -> right;
         }
-        // The cutting part.
+        
+        delete_BST(less -> left);
+        delete_BST(more -> right);
     }
     
-    else if (root < low) {
-        // root = root -> right;
-        // more = more -> right;
-        // delete less;
-        // while (more < low)) {
-            //more = more -> right;
-        // }
-        // the cutting part.
+    else if (root -> key < low) {
+        root = root -> right;
+        more = more -> right;
+        
+        delete_BST(less -> left);
+        delete root -> parent;
+        
+        root -> parent = nullptr;
+        more -> parent = nullptr;
+        
+        while (more -> key < low) {
+            more = more -> right;
+        }
+        
+        more = more -> parent;
+        
+        delete_BST(more -> left);
+        
+        root = more -> right;
+        
+        delete more;
+        
+        root -> parent = nullptr;
     }
     
-    else if (root > high) {
-        // root = root -> left;
-        // less = less -> left;
-        // delete more;
-        // while (less > high)) {
-            //less = less -> left;
-        // }
-        // the cutting part.
+    else if (root -> key > high) {
+        root = root -> left;
+        less = less -> left;
+        
+        delete_BST(more -> right);
+        delete root -> parent;
+        
+        root -> parent = nullptr;
+        less -> parent = nullptr;
+        
+        while (less -> key > high) {
+            less = less -> left;
+        }
+        
+        less = less -> parent;
+        
+        delete_BST(less -> right);
+        
+        root = less -> left;
+        
+        delete less;
+        
+        root -> parent = nullptr;
     }
 }
