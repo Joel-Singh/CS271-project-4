@@ -1,6 +1,7 @@
 #include "BST.h"
 #include "test.cpp"
 #include <iostream>
+#include "usecase.cpp"
 
 using namespace std;
 
@@ -32,8 +33,13 @@ void extended_test_in_order() {
 
 }
 
+void extended_test_usecase() {
+    BST<string, string>* bst = create_bst<string, string>("binhex.txt");
+}
+
 void extended_tests() {
     cout << "Running extended tests (i.e not the default)" << endl;
 
     extended_test_in_order();
+    extended_test_usecase();
 }

@@ -364,7 +364,7 @@ int main()
     test_in_order();
     extended_tests();
     // test_trim();
-    // test_binhex();
+    test_binhex();
 
     cout << "Testing completed" << endl;
 
