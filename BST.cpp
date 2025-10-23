@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <cassert>
+#include <queue>
 
 //=================================================
 // BST()
@@ -364,28 +365,26 @@ string BST<D, K>::to_string() const {
     stringstream s;
     s << root->key << " ";
 
-    list<Node<D, K>*> current_layer;
-    current_layer.push_back(root);
+    // Level order traversal with a queue
+    queue<Node<D, K>*> node_queue;
+    node_queue.push(root);
 
-    while (!current_layer.empty()) {
-        list<Node<D, K>*> next_layer;
+    while (!node_queue.empty()) {
+        auto node = node_queue.front();
+        auto left = node->left;
+        auto right = node->right;
 
-        for (auto node : current_layer) {
-            auto left = node->left;
-            auto right = node->right;
-
-            if (node->left != nullptr) {
-                s << node->left->key << " ";
-                next_layer.push_back(left);
-            }
-
-            if (right != nullptr) {
-                s << node->right->key << " ";
-                next_layer.push_back(right);
-            }
+        if (left != nullptr) {
+            s << left->key << " ";
+            node_queue.push(left);
         }
 
-        current_layer = next_layer;
+        if (right != nullptr) {
+            s << right->key << " ";
+            node_queue.push(right);
+        }
+
+        node_queue.pop();
     }
 
     string str = s.str();
