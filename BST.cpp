@@ -19,13 +19,11 @@ BST<D, K>::BST(void) {
 
 //=================================================
 // delete_BST(Node<D, K>* left, Node<D, K>* right)
-// Description: ?
+// Cleans up the memory of the given leeft and right nodes.
 //
-// PARAMETERS: ?
-//  
-//
-// RETURN VALUE: ?
-//  
+// PARAMETERS: 
+//   left: A possibly nil left node
+//   right: A possibly nil right node
 //=================================================
 template <typename D, typename K> 
 static void delete_BST(Node<D, K>* left, Node<D, K>* right) {
@@ -172,6 +170,8 @@ D BST<D, K>::get(K k) {
 //=================================================
 // transplant
 // Replaces one subtree as a child of its parent with another subtree.
+// WARNING: transplant does _not_ clean up memory nor does it maintain the BST
+// property. It is the onus of the caller.
 //
 // PARAMETERS:
 //  u: A non-nil ptr to a subtree
@@ -221,11 +221,33 @@ void BST<D, K>::remove(K k) {
         y->left = z->left;
         y->left->parent = y;
     }
+
+    delete z;
+}
+
+//=================================================
+// max
+// Returns the max node of the subtree rooted at x or nil if x == nil.
+// Implementation from page 318 of the book.
+//
+// PARAMETERS:
+//  x: Possibly nil pointer to Node
+//
+// RETURN VALUE:
+//  The a reference to max or nil if x == nullptr
+//=================================================
+template <typename D, typename K> 
+Node<D, K>* max(Node<D, K>* x) {
+    while (x->right != nullptr) {
+        x = x->right;
+    }
+
+    return x;
 }
 
 //=================================================
 // max_data()
-// return the data associate with the
+// return the data associated with the
 // largest key in bst.
 //
 // RETURN VALUE:
@@ -234,11 +256,7 @@ void BST<D, K>::remove(K k) {
 template <typename D, typename K> 
 D BST<D, K>::max_data() {
     assert(root != nullptr);
-    while (root -> right != nullptr) {
-        root = root -> right;
-    }
-    
-    return root -> data;
+    return max(root)->data;
 }
 
 //=================================================
@@ -252,16 +270,12 @@ template <typename D, typename K>
 K BST<D, K>::max_key() {
     assert(root != nullptr);
 
-    while (root -> right != nullptr) {
-        root = root -> right;
-    }
-    
-    return root -> key;
+    return max(root)->key;
 }
 
 //=================================================
 // min
-// Returns the minimum node in the tree. From page 318 in the book.
+// Returns the minimum node in the tree or nil if x is nil. From page 318 in the book.
 //
 // RETURN VALUE:
 //  The minimum node in the tree, or nil x is nil.
@@ -306,11 +320,7 @@ template <typename D, typename K>
 K BST<D, K>::min_key() {
     assert(root != nullptr);
 
-    while (root -> left != nullptr) {
-        root = root -> left;
-    }
-    
-    return root -> key;
+    return min(root)->key;
 }
 
 //=================================================
@@ -427,6 +437,10 @@ string BST<D, K>::in_order() {
     return in_order_str;
 }
 
+//=================================================
+// delete_BST(Node<D, K>*)
+// Convenience function to delete a single node with delete_BST(Node<D, K>*, Node<D, K>*)
+//=================================================
 template <typename D, typename K> 
 static void delete_BST(Node<D, K>* node) {
     delete_BST(node->left, node->right);
@@ -441,74 +455,74 @@ static void delete_BST(Node<D, K>* node) {
 // PARAMETERS:
 //  K low, K high
 //=================================================
-template <typename D, typename K> 
+template <typename D, typename K>
 void BST<D, K>::trim(K low, K high) {
     Node<D, K>* less = root;
     Node<D, K>* more = root;
-    
+
     if (root == nullptr) {
     }
-    
+
     else if ((root -> key >= low) && (root -> key <= high)) {
         while (less -> left -> key >= low) {
             less = less -> left;
         }
-        
+
         while (more -> right -> key <= high) {
             more = more -> right;
         }
-        
+
         delete_BST(less -> left);
         delete_BST(more -> right);
     }
-    
+
     else if (root -> key < low) {
         root = root -> right;
         more = more -> right;
-        
+
         delete_BST(less -> left);
         delete root -> parent;
-        
+
         root -> parent = nullptr;
         more -> parent = nullptr;
-        
+
         while (more -> key < low) {
             more = more -> right;
         }
-        
+
         more = more -> parent;
-        
+
         delete_BST(more -> left);
-        
+
         root = more -> right;
-        
+
         delete more;
-        
+
         root -> parent = nullptr;
     }
-    
+
     else if (root -> key > high) {
         root = root -> left;
         less = less -> left;
-        
+
         delete_BST(more -> right);
         delete root -> parent;
-        
+
         root -> parent = nullptr;
         less -> parent = nullptr;
-        
+
         while (less -> key > high) {
             less = less -> left;
         }
-        
+
         less = less -> parent;
-        
+
         delete_BST(less -> right);
-        
+
         root = less -> left;
-        
+
         delete less;
-        
+
         root -> parent = nullptr;
     }
 }

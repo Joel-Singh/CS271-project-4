@@ -35,6 +35,7 @@ void extended_test_in_order() {
 
 void extended_test_usecase() {
     BST<string, string>* bst = create_bst<string, string>("binhex.txt");
+    delete bst;
 }
 
 void extended_tests() {

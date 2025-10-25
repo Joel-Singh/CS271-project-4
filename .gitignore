@@ -1,4 +1,5 @@
 .ccls-cache
 test_bst_example_debug
 test_bst_example
+test_bst_sanitized
 extended_tests
