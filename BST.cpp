@@ -180,7 +180,7 @@ D BST<D, K>::get(K k) {
 template <typename D, typename K> 
 void BST<D, K>::transplant(Node<D, K>* u, Node<D, K>* v) {
     assert(u != nullptr);
-    if (u->parent == nullptr) {
+    if (u == root) {
         root = v;
     } else if (u == u->parent->left) {
         u->parent->left = v;
@@ -194,22 +194,29 @@ void BST<D, K>::transplant(Node<D, K>* u, Node<D, K>* v) {
 }
 
 //=================================================
-// remove(K k)
-// removes the first (closest to the root) node with key k in the bst. Algorithm
-// from page 325 of the book.
+// remove(Node<D, K> z)
+// Remove `z` from the BST and returns the node it was replaced with. Assumes
+// node is not nullptr. Algorithm from page 325 of the book.
 //
 // PARAMETERS:
-//  K key
+//  node: The node to remove
+//
+// RETURN:
+//   The node `z` was replace with or nil
 //=================================================
 template <typename D, typename K> 
-void BST<D, K>::remove(K k) {
-    auto z = iterative_tree_search(root, k);
+Node<D, K>* BST<D, K>::remove(Node<D, K>* z) {
     assert(z != nullptr);
 
+    Node<D, K>* replacement = nullptr;
     if (z->left == nullptr) {
         transplant(z, z->right);
+
+        replacement = z->right;
     } else if (z->right == nullptr) {
         transplant(z, z->left);
+
+        replacement = z->left;
     } else {
         auto y = min(z->right);
         if (y != z->right) {
@@ -220,9 +227,28 @@ void BST<D, K>::remove(K k) {
         transplant(z, y);
         y->left = z->left;
         y->left->parent = y;
+
+        replacement = y;
     }
 
     delete z;
+    return replacement;
+}
+
+//=================================================
+// remove(K k)
+// removes the first (closest to the root) node with key k in the bst.
+// 
+// PARAMETERS:
+//  K key
+//=================================================
+template <typename D, typename K> 
+void BST<D, K>::remove(K k) {
+    auto z = iterative_tree_search(root, k);
+    if (z == nullptr) {
+        return;
+    }
+    remove(z);
 }
 
 //=================================================
@@ -444,6 +470,59 @@ string BST<D, K>::in_order() {
 template <typename D, typename K> 
 static void delete_BST(Node<D, K>* node) {
     delete_BST(node->left, node->right);
+
+    delete node;
+}
+
+//=================================================
+// in_range
+// Checks if a `val` is in the range `low` to `high` inclusive
+//
+// PARAMETERS:
+//  low: The low end of a range
+//  high: The high end of a range
+//
+// RETURN VALUE:
+//  bool representing whether `val` is in range
+//=================================================
+template <typename K> 
+bool in_range(K low, K high, K val) {
+    return ((val >= low) && (val <= high));
+}
+
+template <typename D, typename K> 
+void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
+    if (current == nullptr) {
+        return;
+    }
+
+    bool current_in_range = in_range(low, high, current->key);
+    if (current == root && !current_in_range) {
+        delete_BST(root);
+        root = nullptr;
+        return;
+    } 
+
+    if (current_in_range) {
+        trim(low, high, current->left);
+        trim(low, high, current->right);
+    } else if (current->key > high){
+        if (current->right != nullptr) {
+            delete_BST(current->right);
+            current->right = nullptr;
+        }
+
+        auto replacement = remove(current);
+        trim(low, high, replacement);
+    } else { // current->key must be less than high
+        if (current->left != nullptr) {
+            delete_BST(current->left);
+            current->left = nullptr;
+        }
+
+        auto replacement = remove(current);
+        trim(low, high, replacement);
+    }
 }
 
 //=================================================
@@ -457,72 +536,5 @@ static void delete_BST(Node<D, K>* node) {
 //=================================================
 template <typename D, typename K>
 void BST<D, K>::trim(K low, K high) {
-    Node<D, K>* less = root;
-    Node<D, K>* more = root;
-
-    if (root == nullptr) {
-    }
-
-    else if ((root -> key >= low) && (root -> key <= high)) {
-        while (less -> left -> key >= low) {
-            less = less -> left;
-        }
-
-        while (more -> right -> key <= high) {
-            more = more -> right;
-        }
-
-        delete_BST(less -> left);
-        delete_BST(more -> right);
-    }
-
-    else if (root -> key < low) {
-        root = root -> right;
-        more = more -> right;
-
-        delete_BST(less -> left);
-        delete root -> parent;
-
-        root -> parent = nullptr;
-        more -> parent = nullptr;
-
-        while (more -> key < low) {
-            more = more -> right;
-        }
-
-        more = more -> parent;
-
-        delete_BST(more -> left);
-
-        root = more -> right;
-
-        delete more;
-
-        root -> parent = nullptr;
-    }
-
-    else if (root -> key > high) {
-        root = root -> left;
-        less = less -> left;
-
-        delete_BST(more -> right);
-        delete root -> parent;
-
-        root -> parent = nullptr;
-        less -> parent = nullptr;
-
-        while (less -> key > high) {
-            less = less -> left;
-        }
-
-        less = less -> parent;
-
-        delete_BST(less -> right);
-
-        root = less -> left;
-
-        delete less;
-
-        root -> parent = nullptr;
-    }
+    trim(low, high, root);
 }
