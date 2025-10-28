@@ -2,6 +2,7 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 
 #ifndef USECASE_CPP
 #define USECASE_CPP
@@ -94,5 +95,28 @@ string convert(BST<D, K>* bst, string bin) {
 
     return hex;
 }
+
+#if 0
+
+int main() {
+    string binary_str;
+
+    cout << "Enter binary representation for conversion: ";
+    cin >> binary_str;
+
+    int str_size = binary_str.size();
+    for (int i = 0; i < str_size; i++) {
+        if (binary_str[i] != '0' && binary_str[i] != '1') {
+            throw runtime_error("`" + binary_str.substr(i, 1) + "`" + " is not a valid binary digit");
+        }
+    }
+    BST<string, string> *hex_bst = create_bst<string, string>("binhex.txt");
+
+    cout << "Hexadecimal representation of " << binary_str << " is " << convert<string, string>(hex_bst, binary_str) << endl;
+
+    delete hex_bst;
+}
+
+#endif
 
 #endif

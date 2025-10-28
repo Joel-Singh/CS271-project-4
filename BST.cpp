@@ -169,6 +169,7 @@ template <typename D, typename K>
 D BST<D, K>::get(K k) {
     auto found = iterative_tree_search(root, k);
     if (found == nullptr) {
+        std::cout << "Warning: default data value returned for get call because passed in key doesn't exist" << std::endl;
         return default_data_value<D>();
     } else {
         return found->data;

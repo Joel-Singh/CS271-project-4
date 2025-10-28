@@ -344,6 +344,8 @@ void test_binhex()
     }
 }
 
+#if 1
+
 int main()
 {
 
@@ -370,3 +372,5 @@ int main()
 
     return 0;
 }
+
+#endif

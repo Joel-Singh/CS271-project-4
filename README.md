@@ -11,5 +11,14 @@ programmed with default values for `get` if the requested key,
 
 - Returns default value for the data functions min_data, max_data, and get
 
+## Compiling
+
+To compile: `make && ./test_bst_example`.
+
+To run the usecase, in `./usecase.cpp` set the if macro guard to 1, and the if
+macro guard for the main in `./test_bst_examle`.
+
 # neat things
 We nested a bst in a bst to test the default class constructor.
+
+
