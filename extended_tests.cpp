@@ -184,7 +184,6 @@ void extended_test_successor() {
     test("successor returns the right successor", bst.successor(3), "5");
 }
 
-
 void extended_test_in_order() {
     {
         BST<string, int> bst;
@@ -209,6 +208,20 @@ void extended_test_in_order() {
         bst.insert("", 5);
         bst.insert("", 2);
         test("in_order on bst with many values", bst.in_order(), "2 5");
+    }
+
+    {
+        BST<string, short> bst;
+
+        bst.insert("data", 8);
+        bst.insert("data", 10);
+        bst.insert("data", 3);
+        bst.insert("data", 100);
+        bst.insert("data", -4);
+        bst.insert("data", -8);
+        bst.insert("data", 22);
+
+        test("in order returns the right order", bst.in_order(), "-8 -4 3 8 10 22 100");
     }
 
 }
