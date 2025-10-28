@@ -130,6 +130,13 @@ Node<D, K> *iterative_tree_search(Node<D, K> *x, K k) {
   return x;
 }
 
+//=================================================
+// default_data_vaue
+// Returns a default value for a range of types.
+//
+// RETURN VALUE:
+//  A default value dependent on type D.
+//=================================================
 template <typename D> D default_data_value() {
   if constexpr (is_same_v<D, string>) {
     return "";
@@ -497,6 +504,10 @@ template <typename K> bool in_range(K low, K high, K val) {
   return ((val >= low) && (val <= high));
 }
 
+//=================================================
+// trim
+// The function used for the main recursive work of trim.
+//=================================================
 template <typename D, typename K>
 void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
   if (current == nullptr) {
@@ -534,8 +545,7 @@ void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
 
 //=================================================
 // trim(K low, K high)
-// should trim the binary search
-// tree bst so that the keys of every node lie in
+// trims the  bst so that the keys of every node lie in
 // the interval [low, high]. Throws if high < low.
 //
 // PARAMETERS:
