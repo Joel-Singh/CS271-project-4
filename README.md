@@ -8,3 +8,8 @@ at Denison University by Khai Le and Joel Singh.
 `string`, `bool`, and `arithmetic` as they are the only ones
 programmed with default values for `get` if the requested key,
 `k`, is not in the tree.
+
+- Returns default value for the data functions min_data, max_data, and get
+
+# neat things
+We nested a bst in a bst to test the default class constructor.

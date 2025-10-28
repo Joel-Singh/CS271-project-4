@@ -7,18 +7,76 @@ using namespace std;
 
 void extended_test_empty() {
     {
-        BST<bool, long> bst;
+        BST<string, int> bst;
 
-        test("bst is empty", bst.empty(), "true");
+        test("default bst is empty", bst.empty(), "true");
 
-        bst.insert(true, 0);
+        bst.insert("data", 0);
 
-        test("bst is non-empty", bst.empty(), "false");
+        test("inserting into bst makes it not empty", bst.empty(), "false");
 
         bst.remove(0);
 
-        test("bst is empty", bst.empty(), "true");
+        test("removing from bst makes it empty", bst.empty(), "true");
     }
+
+    {
+        BST<char, short> bst;
+
+        test("empty with char and short", bst.empty(), "true");
+
+        bst.insert('a', 0);
+
+        test("empty with char and short", bst.empty(), "false");
+
+        bst.remove(0);
+
+        test("empty with char and short", bst.empty(), "true");
+    }
+}
+
+void extended_test_insert() {
+    {
+        BST<string, long> bst;
+        bst.insert("data", 1);
+        bst.insert("data", 5);
+        bst.insert("data", -3);
+
+        test("inserting with long as key", bst.to_string(), "1 -3 5");
+    }
+
+    {
+        BST<bool, int> bst;
+        bst.insert(false, 1);
+        bst.insert(true, 5);
+        bst.insert(false, -3);
+
+        test("inserting with bool as data", bst.to_string(), "1 -3 5");
+        test("inserting with bool as data", bst.get(1), "false");
+        test("inserting with bool as data", bst.get(5), "true");
+        test("inserting with bool as data", bst.get(-3), "false");
+    }
+}
+
+void extended_test_get() {
+    BST<string, int> bst_string;
+    BST<char, int> bst_char;
+    BST<bool, int> bst_bool;
+    BST<long, int> bst_arithmetic;
+    BST<BST<string, int>, int> bst_class;
+
+    int non_existent_key = 0;
+
+    test("Get on empty bst returns default value", bst_string.get(non_existent_key), "");
+
+    test("Get on empty bst returns default value", bst_char.get(non_existent_key) == '\0', "true");
+
+    test("Get on empty bst returns default value", bst_bool.get(non_existent_key), "false");
+
+    test("Get on empty bst returns default value", bst_arithmetic.get(non_existent_key), "0");
+
+    test("Get on empty bst returns default value", bst_class.get(0), "");
+
 }
 
 void extended_test_in_order() {
@@ -143,4 +201,6 @@ void extended_tests() {
     extended_trim();
     extended_remove();
     extended_test_empty();
+    extended_test_insert();
+    extended_test_get();
 }

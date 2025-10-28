@@ -138,6 +138,22 @@ Node<D, K>* iterative_tree_search(Node<D, K>* x, K k) {
     return x;
 }
 
+template <typename D> 
+D default_data_value() {
+    if constexpr (is_same_v<D, string>) {
+        return "";
+    }
+    else if constexpr(is_same_v<D, char>) {
+        return '\0';
+    } else if constexpr (is_same_v<D, bool>) {
+        return false;
+    } else if constexpr (is_arithmetic_v<D>) {
+        return 0;
+    } else {
+        return D();
+    }
+}
+
 //=================================================
 // get(K k)
 // return the data associated with key k
@@ -153,15 +169,7 @@ template <typename D, typename K>
 D BST<D, K>::get(K k) {
     auto found = iterative_tree_search(root, k);
     if (found == nullptr) {
-        if constexpr (is_same_v<D, string>) {
-            return "";
-        } else if constexpr (is_same_v<D, bool>) {
-            return false;
-        } else if constexpr (is_arithmetic_v<D>) {
-            return 0;
-        } else {
-            return D();
-        }
+        return default_data_value<D>();
     } else {
         return found->data;
     }
@@ -281,7 +289,9 @@ Node<D, K>* max(Node<D, K>* x) {
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::max_data() {
-    assert(root != nullptr);
+    if (empty()) {
+        return default_data_value<D>();
+    }
     return max(root)->data;
 }
 
@@ -330,7 +340,9 @@ Node<D, K>* BST<D, K>::min(Node<D, K>* x) {
 //=================================================
 template <typename D, typename K> 
 D BST<D, K>::min_data() {
-    assert(root != nullptr);
+    if (empty()) {
+        return default_data_value<D>();
+    }
 
     return min(root)->data;
 }
