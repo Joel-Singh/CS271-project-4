@@ -105,7 +105,7 @@ void extended_test_remove() {
     test("Removing in the middle of a tree", bst, "50 25 90");
 }
 
-void extended_max_data() {
+void extended_test_max_data() {
     BST<char, long int> bst;
     test("max_data returns default value on empty bst", bst.max_data(), "");
 
@@ -150,29 +150,7 @@ void extended_test_usecase() {
     delete bst;
 }
 
-void extended_remove() {
-    try
-    {
-        int vals[10] = {5, 2, 7, 1, 3, 4, 6, 9, 8, 10};
-        BST<string, int> balanced_bst;
-        for (int i = 0; i < 10; i++)
-        {
-            balanced_bst.insert("some data", vals[i]);
-        }
-        balanced_bst.remove(7);
-        // string bst_str = balanced_bst.to_string();
-        // if (bst_str != "5 2 8 1 3 6 9 4 10")
-        // {
-        //     cout << "Incorrect result of removing 7. Expected 5 2 8 1 3 6 9 4 10 but got : " << bst_str << endl;
-        // }
-    }
-    catch (exception &e)
-    {
-        cerr << "Error in removing node from bst : " << e.what() << endl;
-    }
-}
-
-void extended_trim() {
+void extended_test_trim() {
     try
     {
         // {
@@ -236,9 +214,10 @@ void extended_tests() {
 
     extended_test_in_order();
     extended_test_usecase();
-    extended_trim();
-    extended_remove();
+    extended_test_trim();
+    extended_test_remove();
     extended_test_empty();
     extended_test_insert();
     extended_test_get();
+    extended_test_max_data();
 }
