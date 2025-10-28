@@ -5,17 +5,15 @@ using namespace std;
 #ifndef BST_HEADER
 #define BST_HEADER
 
-template <typename D, typename K> 
-struct Node {
-  Node<D, K>* left;
-  Node<D, K>* right;
-  Node<D, K>* parent;
+template <typename D, typename K> struct Node {
+  Node<D, K> *left;
+  Node<D, K> *right;
+  Node<D, K> *parent;
   D data;
   K key;
 };
 
-template <typename D, typename K>
-class BST {
+template <typename D, typename K> class BST {
 public:
   BST(void);
   ~BST(void);
@@ -31,14 +29,15 @@ public:
   string to_string() const;
   string in_order();
   void trim(K low, K high);
+
 private:
-  void transplant(Node<D, K>* u, Node<D, K>* v);
-  Node<D, K>* min(Node<D, K>* node);
-  Node<D, K>* remove_node(Node<D, K>* node);
-  string in_order(Node<D, K>* x);
-  void trim(K low, K high, Node<D, K>* current);
-  
-  Node<D, K>* root;
+  void transplant(Node<D, K> *u, Node<D, K> *v);
+  Node<D, K> *min(Node<D, K> *node);
+  Node<D, K> *remove_node(Node<D, K> *node);
+  string in_order(Node<D, K> *x);
+  void trim(K low, K high, Node<D, K> *current);
+
+  Node<D, K> *root;
 };
 
 #include "BST.cpp"

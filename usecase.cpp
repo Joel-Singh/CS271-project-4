@@ -1,8 +1,8 @@
 #include "BST.h"
-#include <string.h>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <stdexcept>
+#include <string.h>
 
 #ifndef USECASE_CPP
 #define USECASE_CPP
@@ -25,40 +25,39 @@
 // RETURN VALUE:
 //  BST created from the elements in `fname`
 //=================================================
-template <typename D, typename K>
-BST<D,K>* create_bst(string fname) {
-    // Reading a file example from https://en.cppreference.com/w/cpp/io/basic_fstream.html
-    std::fstream file(fname);
- 
-    BST<D, K>* bst = new BST<D, K>();
-    if (!file.is_open())
-        throw new runtime_error("Unable to open `" + fname + "`");
-    else
-    {
-        // Used the getline example from:
-        // https://en.cppreference.com/w/cpp/string/basic_string/getline
-        for (string line; getline(file, line);) {
-            K key;
-            D data;
+template <typename D, typename K> BST<D, K> *create_bst(string fname) {
+  // Reading a file example from
+  // https://en.cppreference.com/w/cpp/io/basic_fstream.html
+  std::fstream file(fname);
 
-            int delimiter_index = 0;
-            // No if guard, can assume there is a comma in every line
-            for (int i = 0;; i++) {
-                assert(i < line.size());
-                if (line[i] == ',') {
-                    delimiter_index = i;
-                    break;
-                }
-            }
+  BST<D, K> *bst = new BST<D, K>();
+  if (!file.is_open())
+    throw new runtime_error("Unable to open `" + fname + "`");
+  else {
+    // Used the getline example from:
+    // https://en.cppreference.com/w/cpp/string/basic_string/getline
+    for (string line; getline(file, line);) {
+      K key;
+      D data;
 
-            data = line.substr(0, delimiter_index);
-            key = line.substr(delimiter_index+1);
-
-            bst->insert(data, key);
+      int delimiter_index = 0;
+      // No if guard, can assume there is a comma in every line
+      for (int i = 0;; i++) {
+        assert(i < line.size());
+        if (line[i] == ',') {
+          delimiter_index = i;
+          break;
         }
-    }
+      }
 
-    return bst;
+      data = line.substr(0, delimiter_index);
+      key = line.substr(delimiter_index + 1);
+
+      bst->insert(data, key);
+    }
+  }
+
+  return bst;
 }
 
 //=================================================
@@ -72,49 +71,50 @@ BST<D,K>* create_bst(string fname) {
 // RETURN VALUE:
 //  A hex string representation of `bin`.
 //=================================================
-template <typename D, typename K>
-string convert(BST<D, K>* bst, string bin) {
-    int bin_size_four_remainder = bin.size() % 4;
+template <typename D, typename K> string convert(BST<D, K> *bst, string bin) {
+  int bin_size_four_remainder = bin.size() % 4;
 
-    // Pad the binary string
-    if (bin_size_four_remainder != 0) {
-        if (bin_size_four_remainder == 1) {
-            bin = "000" + bin;
-        } else if (bin_size_four_remainder == 2) {
-            bin = "00" + bin;
-        } else if (bin_size_four_remainder == 3) {
-            bin = "0" + bin;
-        }
+  // Pad the binary string
+  if (bin_size_four_remainder != 0) {
+    if (bin_size_four_remainder == 1) {
+      bin = "000" + bin;
+    } else if (bin_size_four_remainder == 2) {
+      bin = "00" + bin;
+    } else if (bin_size_four_remainder == 3) {
+      bin = "0" + bin;
     }
+  }
 
-    string hex;
-    int hex_digit_count = bin.size() / 4;
-    for (int i = 0; i < hex_digit_count; i++) {
-        hex += bst->get(bin.substr(i * 4, 4));
-    }
+  string hex;
+  int hex_digit_count = bin.size() / 4;
+  for (int i = 0; i < hex_digit_count; i++) {
+    hex += bst->get(bin.substr(i * 4, 4));
+  }
 
-    return hex;
+  return hex;
 }
 
 #ifdef ENABLE_USECASE_MAIN
 
 int main() {
-    string binary_str;
+  string binary_str;
 
-    cout << "Enter binary representation for conversion: ";
-    cin >> binary_str;
+  cout << "Enter binary representation for conversion: ";
+  cin >> binary_str;
 
-    int str_size = binary_str.size();
-    for (int i = 0; i < str_size; i++) {
-        if (binary_str[i] != '0' && binary_str[i] != '1') {
-            throw runtime_error("`" + binary_str.substr(i, 1) + "`" + " is not a valid binary digit");
-        }
+  int str_size = binary_str.size();
+  for (int i = 0; i < str_size; i++) {
+    if (binary_str[i] != '0' && binary_str[i] != '1') {
+      throw runtime_error("`" + binary_str.substr(i, 1) + "`" +
+                          " is not a valid binary digit");
     }
-    BST<string, string> *hex_bst = create_bst<string, string>("binhex.txt");
+  }
+  BST<string, string> *hex_bst = create_bst<string, string>("binhex.txt");
 
-    cout << "Hexadecimal representation of " << binary_str << " is " << convert<string, string>(hex_bst, binary_str) << endl;
+  cout << "Hexadecimal representation of " << binary_str << " is "
+       << convert<string, string>(hex_bst, binary_str) << endl;
 
-    delete hex_bst;
+  delete hex_bst;
 }
 
 #endif
