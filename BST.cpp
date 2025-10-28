@@ -3,7 +3,6 @@
 #include <sstream>
 #include <iostream>
 #include <cassert>
-#include <queue>
 
 //=================================================
 // BST()
@@ -162,7 +161,9 @@ D BST<D, K>::get(K k) {
         } else if constexpr (is_arithmetic_v<D>) {
             return 0;
         } else {
-            return D();
+          throw runtime_error(
+              "Tried to get a key for a Data type that doesn't have a default "
+              "value (valid types: bool, arithmetic, and string)");
         }
     } else {
         return found->data;
@@ -357,7 +358,7 @@ K BST<D, K>::successor(K k) {
 //  A string of keys.
 //=================================================
 template <typename D, typename K> 
-string BST<D, K>::to_string() const {
+string BST<D, K>::to_string() {
     if (root == nullptr) {
         return "";
     }
@@ -365,26 +366,28 @@ string BST<D, K>::to_string() const {
     stringstream s;
     s << root->key << " ";
 
-    // Level order traversal with a queue
-    queue<Node<D, K>*> node_queue;
-    node_queue.push(root);
+    list<Node<D, K>*> current_layer;
+    current_layer.push_back(root);
 
-    while (!node_queue.empty()) {
-        auto node = node_queue.front();
-        auto left = node->left;
-        auto right = node->right;
+    while (!current_layer.empty()) {
+        list<Node<D, K>*> next_layer;
 
-        if (left != nullptr) {
-            s << left->key << " ";
-            node_queue.push(left);
+        for (auto node : current_layer) {
+            auto left = node->left;
+            auto right = node->right;
+
+            if (node->left != nullptr) {
+                s << node->left->key << " ";
+                next_layer.push_back(left);
+            }
+
+            if (right != nullptr) {
+                s << node->right->key << " ";
+                next_layer.push_back(right);
+            }
         }
 
-        if (right != nullptr) {
-            s << right->key << " ";
-            node_queue.push(right);
-        }
-
-        node_queue.pop();
+        current_layer = next_layer;
     }
 
     string str = s.str();
@@ -405,6 +408,7 @@ string BST<D, K>::in_order(Node<D, K>* x) {
     }
 
     string str = s.str();
+    str = str.substr(0, str.size() - 1); // Remove trailing space
     return str;
 }
 //=================================================
@@ -421,10 +425,7 @@ string BST<D, K>::in_order() {
         return "";
     }
     
-
-    string in_order_str = in_order(root);
-    in_order_str = in_order_str.substr(0, in_order_str.size() - 1); // Remove trailing space
-    return in_order_str;
+    return in_order(root);
 }
 
 template <typename D, typename K> 
@@ -441,74 +442,120 @@ static void delete_BST(Node<D, K>* node) {
 // PARAMETERS:
 //  K low, K high
 //=================================================
+//template <typename D, typename K> 
+//void BST<D, K>::trim(K low, K high) {
+//    Node<D, K>* less = root;
+//   Node<D, K>* more = root;
+    
+//    if (root == nullptr) {
+//    }
+    
+//    else if ((root -> key >= low) && (root -> key <= high)) {
+//        while (less -> left -> key >= low) {
+//            less = less -> left;
+//        }
+        
+//        while (more -> right -> key <= high) {
+//           more = more -> right;
+//        }
+        
+//        delete_BST(less -> left);
+//        delete_BST(more -> right);
+//    }
+    
+//    else if (root -> key < low) {
+//        root = root -> right;
+//        more = more -> right;
+        
+//        delete_BST(less -> left);
+//        delete root -> parent;
+        
+//        root -> parent = nullptr;
+//        more -> parent = nullptr;
+        
+//        while (more -> key < low) {
+//            more = more -> right;
+//        }
+        
+//        more = more -> parent;
+        
+//        delete_BST(more -> left);
+        
+//        root = more -> right;
+        
+//        delete more;
+        
+//        root -> parent = nullptr;
+//    }
+    
+//    else if (root -> key > high) {
+//        root = root -> left;
+//        less = less -> left;
+        
+//        delete_BST(more -> right);
+//        delete root -> parent;
+        
+//        root -> parent = nullptr;
+//        less -> parent = nullptr;
+        
+//        while (less -> key > high) {
+//            less = less -> left;
+//        }
+        
+//        less = less -> parent;
+        
+//        delete_BST(less -> right);
+        
+//        root = less -> left;
+        
+//        delete less;
+        
+//        root -> parent = nullptr;
+//    }
+//}
+
+template <typename D, typename K> 
+void BST<D, K>::trim_idv(K low, K high, Node<D, K>* x) {
+    if (root == nullptr) {
+        //do nothing
+    }
+    
+    else if (x -> key < low) {
+        if (x -> left != nullptr) {
+            delete_BST(x -> left);
+        }
+        
+        if (x -> right != nullptr) {
+            transplant(x, x -> right);
+            trim_idv(low, high, x -> right);
+        }
+    }
+    
+    else if (x -> key > high) {
+        if (x -> right != nullptr) {
+            delete_BST(x -> right);
+        }
+        
+        if (x -> left != nullptr) {
+            transplant(x, x -> left);
+            trim_idv(low, high, x -> left);
+        }
+    }
+    
+    else if ((x -> key >= low) && (x -> key <= high)) {
+        if (x -> left != nullptr) {
+            assert(x != nullptr);
+            assert(x->left != nullptr);
+            trim_idv(low, high, x -> left);
+        }
+        
+        if (x -> right != nullptr) {
+            trim_idv(low, high, x -> right);
+        }
+    }
+}
+
 template <typename D, typename K> 
 void BST<D, K>::trim(K low, K high) {
-    Node<D, K>* less = root;
-    Node<D, K>* more = root;
-    
-    if (root == nullptr) {
-    }
-    
-    else if ((root -> key >= low) && (root -> key <= high)) {
-        while (less -> left -> key >= low) {
-            less = less -> left;
-        }
-        
-        while (more -> right -> key <= high) {
-            more = more -> right;
-        }
-        
-        delete_BST(less -> left);
-        delete_BST(more -> right);
-    }
-    
-    else if (root -> key < low) {
-        root = root -> right;
-        more = more -> right;
-        
-        delete_BST(less -> left);
-        delete root -> parent;
-        
-        root -> parent = nullptr;
-        more -> parent = nullptr;
-        
-        while (more -> key < low) {
-            more = more -> right;
-        }
-        
-        more = more -> parent;
-        
-        delete_BST(more -> left);
-        
-        root = more -> right;
-        
-        delete more;
-        
-        root -> parent = nullptr;
-    }
-    
-    else if (root -> key > high) {
-        root = root -> left;
-        less = less -> left;
-        
-        delete_BST(more -> right);
-        delete root -> parent;
-        
-        root -> parent = nullptr;
-        less -> parent = nullptr;
-        
-        while (less -> key > high) {
-            less = less -> left;
-        }
-        
-        less = less -> parent;
-        
-        delete_BST(less -> right);
-        
-        root = less -> left;
-        
-        delete less;
-        
-        root -> parent = nullptr;
-    }
+    trim_idv(low, high, root);
 }
