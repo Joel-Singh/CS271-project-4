@@ -304,7 +304,10 @@ D BST<D, K>::max_data() {
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::max_key() {
-    assert(root != nullptr);
+    if (root == nullptr) {
+        std::cout << "Warning: default key of 0 returned for max_key call on empty bst" << std::endl;
+        return 0;
+    }
 
     return max(root)->key;
 }

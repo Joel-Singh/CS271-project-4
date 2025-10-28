@@ -80,29 +80,43 @@ void extended_test_get() {
 }
 
 void extended_test_remove() {
-    BST<bool, long> bst;
+    {
+        BST<bool, long> bst;
 
-    bst.remove(0);
-    test("Removing from empty bst does nothing", bst, "");
+        bst.remove(0);
+        test("Removing from empty bst does nothing", bst, "");
+    }
 
-    bst.insert(false, 42);
-    bst.remove(42);
-    test("Removing by key", bst, "");
+    {
+        BST<bool, long> bst;
 
-    bst.insert(false, 50);
-    bst.insert(false, 25);
-    bst.insert(false, 75);
+        bst.insert(false, 42);
+        bst.remove(42);
+        test("Removing by key", bst, "");
+    }
 
-    bst.remove(50);
-    test("Removing the head of a tree", bst, "25 75");
+    {
+        BST<bool, long> bst;
 
-    bst.insert(false, 50);
-    bst.insert(false, 25);
-    bst.insert(false, 75);
-    bst.insert(false, 90);
+        bst.insert(false, 50);
+        bst.insert(false, 25);
+        bst.insert(false, 75);
 
-    bst.remove(75);
-    test("Removing in the middle of a tree", bst, "50 25 90");
+        bst.remove(50);
+        test("Removing the head of a tree", bst, "75 25");
+    }
+
+    {
+        BST<bool, long> bst;
+
+        bst.insert(false, 50);
+        bst.insert(false, 25);
+        bst.insert(false, 75);
+        bst.insert(false, 90);
+
+        bst.remove(75);
+        test("Removing in the middle of a tree", bst, "50 25 90");
+    }
 }
 
 void extended_test_max_data() {
@@ -115,6 +129,18 @@ void extended_test_max_data() {
     bst.insert('a', 100);
 
     test("max_data returns the data of highest key", bst.max_data(), "a");
+}
+
+void extended_test_max_key() {
+    BST<int, int> bst;
+
+    test("Returns default value of 0 on max_key", bst.max_key(), "0");
+
+    bst.insert(30, 80);
+    bst.insert(50, 100);
+    bst.insert(20, 500);
+
+    test("max_key returns max key", bst.max_key(), "500");
 }
 
 void extended_test_in_order() {
@@ -220,4 +246,5 @@ void extended_tests() {
     extended_test_insert();
     extended_test_get();
     extended_test_max_data();
+    extended_test_max_key();
 }

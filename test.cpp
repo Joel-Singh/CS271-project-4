@@ -17,7 +17,14 @@ template <typename T> static string stringify(const T &value) {
       return "false";
     }
   } else if constexpr (std::is_same_v<T, char>) {
-    return std::string(1, value);
+    if (value == '\0') { // If the character is the zero character, return an
+                         // empty string directly. The string constructor would
+                         // instead create a non-empty string that contains
+                         // '\0'.
+      return "";
+    } else {
+      return std::string(1, value);
+    }
   } else if constexpr (std::is_arithmetic_v<T>) {
     return std::to_string(value);
   } else if constexpr (std::is_same_v<T, std::string>) {
@@ -53,6 +60,7 @@ template <typename T> static string stringify(const T &value) {
 template <typename T>
 void test(std::string description, const T &actual, std::string expected) {
   cout << "Testing `" << description << "`" << endl;
+
   if (stringify(actual) != expected) {
     cout << "FAILED" << endl;
     cout << "Expected: `" << expected << "`" << endl;
