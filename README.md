@@ -13,10 +13,12 @@ programmed with default values for `get` if the requested key,
 
 ## Compiling
 
-To compile: `make && ./test_bst_example`.
+To compile: `make && ./main`.
 
-To run the usecase, in `./usecase.cpp` set the if macro guard to 1, and the if
-macro guard for the main in `./test_bst_examle`.
+To run the usecase main instead of the tests, uncomment the following line from `./main.cpp`:
+```cpp
+// #define ENABLE_USECASE_MAIN
+```
 
 # neat things
 We nested a bst in a bst to test the default class constructor.

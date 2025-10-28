@@ -344,16 +344,10 @@ void test_binhex()
     }
 }
 
-#if 1
+#ifndef ENABLE_USECASE_MAIN
 
 int main()
 {
-
-    string file_name = "usecase.cpp";
-    cout << endl
-         << "Running tests for " << file_name << endl
-         << endl;
-
     test_empty();
     test_insert();
     test_get();

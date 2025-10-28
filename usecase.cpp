@@ -96,7 +96,7 @@ string convert(BST<D, K>* bst, string bin) {
     return hex;
 }
 
-#if 0
+#ifdef ENABLE_USECASE_MAIN
 
 int main() {
     string binary_str;

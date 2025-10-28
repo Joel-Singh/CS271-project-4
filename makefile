@@ -1,8 +1,8 @@
-test_bst_example: BST.cpp BST.h usecase.cpp
-	g++ -o test_bst_example test_bst_example.cpp
+main: BST.cpp BST.h usecase.cpp main.cpp
+	g++ -o main main.cpp
 
-test_bst_example_debug: BST.cpp BST.h usecase.cpp
-	g++ -g -O0 -o test_bst_example_debug test_bst_example.cpp
+main_debug: BST.cpp BST.h usecase.cpp main.cpp
+	g++ -g -O0 -o main_debug main.cpp
 
-test_bst_sanitized: BST.cpp BST.h usecase.cpp
-	g++ -g -fsanitize=address -o test_bst_sanitized test_bst_example.cpp
+main_sanitized: BST.cpp BST.h usecase.cpp main.cpp
+	g++ -g -fsanitize=address -o main_sanitized main.cpp
