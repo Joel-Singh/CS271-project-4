@@ -155,6 +155,18 @@ void extended_test_min_data()  {
     test("min_data returns the data of lowest key", bst.min_data(), "d");
 }
 
+void extended_test_min_key() {
+    BST<int, int> bst;
+
+    test("Returns default value of 0 on min_key", bst.min_key(), "0");
+
+    bst.insert(30, 80);
+    bst.insert(50, 100);
+    bst.insert(20, 500);
+
+    test("min_key returns min key", bst.min_key(), "80");
+}
+
 
 void extended_test_in_order() {
     {
