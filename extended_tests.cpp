@@ -143,6 +143,19 @@ void extended_test_max_key() {
     test("max_key returns max key", bst.max_key(), "500");
 }
 
+void extended_test_min_data()  {
+    BST<char, long int> bst;
+    test("min_data returns default value on empty bst", bst.min_data(), "");
+
+    bst.insert('d', 5);
+    bst.insert('i', 10);
+    bst.insert('z', 20);
+    bst.insert('a', 100);
+
+    test("min_data returns the data of lowest key", bst.min_data(), "d");
+}
+
+
 void extended_test_in_order() {
     {
         BST<string, int> bst;
