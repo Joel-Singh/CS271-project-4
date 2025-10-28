@@ -551,12 +551,15 @@ void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
 // trim(K low, K high)
 // should trim the binary search
 // tree bst so that the keys of every node lie in
-// the interval [low, high].
+// the interval [low, high]. Throws if high < low.
 //
 // PARAMETERS:
 //  K low, K high
 //=================================================
 template <typename D, typename K>
 void BST<D, K>::trim(K low, K high) {
+    if (high < low) {
+        throw logic_error("High cannot be less than low!");
+    }
     trim(low, high, root);
 }
