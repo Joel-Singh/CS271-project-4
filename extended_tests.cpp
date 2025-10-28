@@ -167,6 +167,23 @@ void extended_test_min_key() {
     test("min_key returns min key", bst.min_key(), "80");
 }
 
+void extended_test_successor() {
+    BST<char, int> bst;
+
+    test("Returns default value if passed in key does not exist", bst.successor(0), "0");
+
+    bst.insert('a', 5);
+    bst.insert('b', 8);
+    bst.insert('c', 10);
+    bst.insert('d', 3);
+    bst.insert('e', 1);
+    bst.insert('f', 2);
+
+    test("successor returns 0 on no successor", bst.successor(10), "0");
+    test("successor returns the right successor", bst.successor(5), "8");
+    test("successor returns the right successor", bst.successor(3), "5");
+}
+
 
 void extended_test_in_order() {
     {
@@ -270,6 +287,8 @@ void extended_tests() {
     extended_test_max_data();
     extended_test_max_key();
     extended_test_min_data();
+    extended_test_min_key();
+    extended_test_successor();
     extended_test_in_order();
     extended_test_usecase();
     extended_test_trim();

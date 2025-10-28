@@ -304,7 +304,7 @@ D BST<D, K>::max_data() {
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::max_key() {
-    if (root == nullptr) {
+    if (empty()) {
         std::cout << "Warning: default key of 0 returned for max_key call on empty bst" << std::endl;
         return 0;
     }
@@ -359,7 +359,10 @@ D BST<D, K>::min_data() {
 //=================================================
 template <typename D, typename K> 
 K BST<D, K>::min_key() {
-    assert(root != nullptr);
+    if (empty()) {
+        std::cout << "Warning: default key of 0 returned for min_key call on empty bst" << std::endl;
+        return 0;
+    }
 
     return min(root)->key;
 }
@@ -380,7 +383,10 @@ template <typename D, typename K>
 K BST<D, K>::successor(K k) {
     auto x = iterative_tree_search(root, k);
     if (x == nullptr) {
-        return 0;
+      std::cout << "Warning: default key of 0 returned for successor call "
+                   "because there is no node that has the passed in key"
+                << std::endl;
+      return 0;
     }
 
     if (x->right != nullptr) {
@@ -392,6 +398,7 @@ K BST<D, K>::successor(K k) {
             y = y->parent;
         }
         if (y == nullptr) {
+            std::cout << "Warning: No successor found, default value of 0 returned" << std::endl;
             return 0;
         }
         return y->key;
