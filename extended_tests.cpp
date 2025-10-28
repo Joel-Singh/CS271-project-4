@@ -79,6 +79,32 @@ void extended_test_get() {
 
 }
 
+void extended_test_remove() {
+    BST<bool, long> bst;
+
+    bst.remove(0);
+    test("Removing from empty bst does nothing", bst, "");
+
+    bst.insert(false, 42);
+    bst.remove(42);
+    test("Removing by key", bst, "");
+
+    bst.insert(false, 50);
+    bst.insert(false, 25);
+    bst.insert(false, 75);
+
+    bst.remove(50);
+    test("Removing the head of a tree", bst, "25 75");
+
+    bst.insert(false, 50);
+    bst.insert(false, 25);
+    bst.insert(false, 75);
+    bst.insert(false, 90);
+
+    bst.remove(75);
+    test("Removing in the middle of a tree", bst, "50 25 90");
+}
+
 void extended_test_in_order() {
     {
         BST<string, int> bst;
