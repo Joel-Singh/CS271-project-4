@@ -23,7 +23,6 @@ public:
   void insert(D d, K k);
   D get(K k);
   void remove(K k);
-  Node<D, K>* remove(Node<D, K>* node);
   D max_data();
   K max_key();
   D min_data();
@@ -37,6 +36,7 @@ public:
 private:
   void transplant(Node<D, K>* u, Node<D, K>* v);
   Node<D, K>* min(Node<D, K>* node);
+  Node<D, K>* remove_node(Node<D, K>* node);
   
   Node<D, K>* root;
 };

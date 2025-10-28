@@ -5,6 +5,22 @@
 
 using namespace std;
 
+void extended_test_empty() {
+    {
+        BST<bool, long> bst;
+
+        test("bst is empty", bst.empty(), "true");
+
+        bst.insert(true, 0);
+
+        test("bst is non-empty", bst.empty(), "false");
+
+        bst.remove(0);
+
+        test("bst is empty", bst.empty(), "true");
+    }
+}
+
 void extended_test_in_order() {
     {
         BST<string, int> bst;
@@ -122,8 +138,9 @@ void extended_trim() {
 void extended_tests() {
     cout << "Running extended tests (i.e not the default)" << endl;
 
-    // extended_test_in_order();
-    // extended_test_usecase();
+    extended_test_in_order();
+    extended_test_usecase();
     extended_trim();
-    // extended_remove();
+    extended_remove();
+    extended_test_empty();
 }

@@ -205,7 +205,7 @@ void BST<D, K>::transplant(Node<D, K>* u, Node<D, K>* v) {
 //   The node `z` was replace with or nil
 //=================================================
 template <typename D, typename K> 
-Node<D, K>* BST<D, K>::remove(Node<D, K>* z) {
+Node<D, K>* BST<D, K>::remove_node(Node<D, K>* z) {
     assert(z != nullptr);
 
     Node<D, K>* replacement = nullptr;
@@ -248,7 +248,7 @@ void BST<D, K>::remove(K k) {
     if (z == nullptr) {
         return;
     }
-    remove(z);
+    remove_node(z);
 }
 
 //=================================================
@@ -512,7 +512,7 @@ void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
             current->right = nullptr;
         }
 
-        auto replacement = remove(current);
+        auto replacement = remove_node(current);
         trim(low, high, replacement);
     } else { // current->key must be less than high
         if (current->left != nullptr) {
@@ -520,7 +520,7 @@ void BST<D, K>::trim(K low, K high, Node<D, K> *current) {
             current->left = nullptr;
         }
 
-        auto replacement = remove(current);
+        auto replacement = remove_node(current);
         trim(low, high, replacement);
     }
 }
