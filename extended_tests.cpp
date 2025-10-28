@@ -238,13 +238,14 @@ void extended_test_trim() {
 void extended_tests() {
     cout << "Running extended tests (i.e not the default)" << endl;
 
-    extended_test_in_order();
-    extended_test_usecase();
-    extended_test_trim();
-    extended_test_remove();
     extended_test_empty();
     extended_test_insert();
     extended_test_get();
+    extended_test_remove();
     extended_test_max_data();
     extended_test_max_key();
+    extended_test_min_data();
+    extended_test_in_order();
+    extended_test_usecase();
+    extended_test_trim();
 }
