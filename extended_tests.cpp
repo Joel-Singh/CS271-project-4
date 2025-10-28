@@ -105,6 +105,18 @@ void extended_test_remove() {
     test("Removing in the middle of a tree", bst, "50 25 90");
 }
 
+void extended_max_data() {
+    BST<char, long int> bst;
+    test("max_data returns default value on empty bst", bst.max_data(), "");
+
+    bst.insert('d', 5);
+    bst.insert('i', 10);
+    bst.insert('z', 20);
+    bst.insert('a', 100);
+
+    test("max_data returns the data of highest key", bst.max_data(), "a");
+}
+
 void extended_test_in_order() {
     {
         BST<string, int> bst;

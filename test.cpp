@@ -16,6 +16,8 @@ template <typename T> static string stringify(const T &value) {
     } else {
       return "false";
     }
+  } else if constexpr (std::is_same_v<T, char>) {
+    return std::string(1, value);
   } else if constexpr (std::is_arithmetic_v<T>) {
     return std::to_string(value);
   } else if constexpr (std::is_same_v<T, std::string>) {
